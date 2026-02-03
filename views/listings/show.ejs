@@ -1,0 +1,118 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="show-container fade-in">
+
+  <!-- IMAGE -->
+  <div class="listing-image-wrap">
+    <img src="<%= listing.image.url %>" alt="listing image">
+  </div>
+
+  <!-- DETAILS -->
+  <div class="listing-info">
+    <h1><%= listing.title %></h1>
+
+    <p class="location">
+      <%= listing.location %>, <%= listing.country %>
+    </p>
+
+    <h3 class="price">₹ <%= listing.price %> / night</h3>
+
+    <p class="description">
+      <%= listing.description %>
+    </p>
+
+    <% if (currentUser && listing.owner && listing.owner.equals(currentUser._id)) { %>
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning btn-sm">
+        Edit
+      </a>
+
+      <form
+        action="/listings/<%= listing._id %>?_method=DELETE"
+        method="POST"
+        style="display:inline;">
+        <button class="btn btn-danger btn-sm">Delete</button>
+      </form>
+    <% } %>
+    
+  </div>
+
+  <!-- ================= REVIEWS ================= -->
+  <div class="review-section">
+
+    <h3>Reviews</h3>
+
+    <!-- ADD REVIEW -->
+    <% if (currentUser) { %>
+      <div class="review-form">
+        <h4>Add your review</h4>
+
+        <form action="/listings/<%= listing._id %>/reviews" method="POST">
+
+          <!-- STAR RATING -->
+          <div class="star-rating">
+            <% for (let i = 5; i >= 1; i--) { %>
+              <input
+                type="radio"
+                id="star-<%= i %>"
+                name="review[rating]"
+                value="<%= i %>"
+                required>
+              <label for="star-<%= i %>">★</label>
+            <% } %>
+          </div>
+
+          <!-- COMMENT -->
+          <textarea
+            name="review[comment]"
+            placeholder="Share your experience"
+            required></textarea>
+
+          <button class="btn btn-primary btn-sm mt-2">
+            Submit Review
+          </button>
+        </form>
+      </div>
+    <% } else { %>
+      <p class="text-muted">
+        Please <a href="/login">login</a> to add a review.
+      </p>
+    <% } %>
+
+    <!-- REVIEW LIST -->
+  <div class="reviews-list">
+    <% if (listing.reviews.length === 0) { %>
+      <p class="no-reviews">No reviews yet</p>
+    <% } %>
+
+    <% for (let review of listing.reviews) { %>
+      <div class="review-card">
+
+        <div class="review-header">
+          <strong><%= review.owner?.username || "Guest" %></strong>
+          <span><%= review.createdAt.toDateString() %></span>
+        </div>
+
+        <div class="rating-display">
+          <% for (let i = 1; i <= 5; i++) { %>
+            <span class="star <%= i <= review.rating ? 'full' : 'empty' %>">★</span>
+          <% } %>
+        </div>
+
+        <p><%= review.comment %></p>
+
+        <% if (currentUser && review.owner && review.owner.equals(currentUser._id)) { %>
+          <form
+            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+            method="POST">
+            <button class="btn btn-danger btn-sm">
+              Delete
+            </button>
+          </form>
+        <% } %>
+
+      </div>
+    <% } %>
+
+  </div>
+  </div>
+

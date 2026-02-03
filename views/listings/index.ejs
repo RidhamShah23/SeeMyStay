@@ -1,0 +1,44 @@
+<% layout("/layouts/boilerplate") %>
+
+<h2 class="mb-4 text-center">Explore stays across India</h2>
+
+<div class="row">
+<% if (q) { %>
+  <p class="text-muted text-center">
+    Showing results for "<strong><%= q %></strong>"
+  </p>
+<% } %>
+
+  <% for (let listing of alllistings) { %>
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+      <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+
+        <div class="listing-card-airbnb">
+
+          <!-- IMAGE -->
+          <div class="listing-image">
+            <img src="<%= listing.image.url %>" alt="listing image">
+          </div>
+
+          <!-- DETAILS -->
+          <div class="listing-info">
+            <p class="listing-location">
+              <%= listing.location %>, <%= listing.country %>
+            </p>
+
+            <h6 class="listing-title">
+              <%= listing.title %>
+            </h6>
+
+            <p class="listing-price">
+              ₹ <%= listing.price %> <span>/ night</span>
+            </p>
+          </div>
+
+        </div>
+
+      </a>
+    </div>
+  <% } %>
+
+</div>

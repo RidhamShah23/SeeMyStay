@@ -1,0 +1,23 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="auth-container">
+    <h2 class="auth-title">Sign Up</h2>
+
+    <form action="/register" method="POST" class="auth-form">
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Username</label>
+        <input type="text" name="username" required>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <button class="auth-btn">Create Account</button>
+    </form>
+
+    <div class="auth-footer">
+        Already have an account?
+        <a href="/login">Login</a>
+    </div>
+</div>
