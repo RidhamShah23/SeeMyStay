@@ -17,6 +17,10 @@ const listingsRouter = require("./routes/listings");
 const reviewsRouter = require("./routes/reviews");
 const usersRouter = require("./routes/users");
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 // ================= DATABASE =================
 mongoose
   .connect(process.env.ATLASDB_URL)
