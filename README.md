@@ -1,4 +1,4 @@
-# 🏡 BookMyStay
+# 🏡 SeeMyStay
 
 A web application where users can explore places, add listings, upload images, and write reviews.
 
