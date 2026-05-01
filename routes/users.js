@@ -18,7 +18,7 @@ router.post("/register", async (req, res, next) => {
 
         req.login(registeredUser, err => {
             if (err) return next(err);
-            req.flash("success", "Welcome to BookMyStay!");
+            req.flash("success", "Welcome to SeeMyStay!");
             res.redirect("/listings");
         });
     } catch (e) {
