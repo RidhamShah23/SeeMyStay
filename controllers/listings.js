@@ -57,7 +57,7 @@ module.exports.createListing = async (req, res) => {
 
   listing.owner = req.user._id;
 
-  await listing.save();       // 🔑 THIS WAS NOT EXECUTING
+  await listing.save();       
 
   req.flash("success", "Listing created successfully!");
   res.redirect(`/listings/${listing._id}`);
